@@ -49,4 +49,35 @@ public class PedidoController {
         pedidoService.deletarPedido(id);
         return ResponseEntity.noContent().build();
     }
+
+    // Registrar uma nova venda
+    @PostMapping("/registrar-venda/{clienteId}")
+    public ResponseEntity<Pedido> registrarVenda(@PathVariable Long clienteId, @RequestBody List<Long> produtoIds) {
+        try {
+            Pedido novoPedido = pedidoService.registrarVenda(clienteId, produtoIds);
+            return ResponseEntity.ok(novoPedido);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    // Histórico de pedidos de um cliente
+    @GetMapping("/cliente/{clienteId}/historico")
+    public ResponseEntity<List<Pedido>> historicoPedidosPorCliente(@PathVariable Long clienteId) {
+        List<Pedido> pedidos = pedidoService.obterHistoricoPorCliente(clienteId);
+        return pedidos.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(pedidos);
+    }
+
+    // Consultar todos os pedidos com filtros opcionais (exemplo: data inicial e final)
+    @GetMapping("/consulta")
+    public ResponseEntity<List<Pedido>> consultarPedidos(
+            @RequestParam(required = false) String dataInicial,
+            @RequestParam(required = false) String dataFinal) {
+        try {
+            List<Pedido> pedidos = pedidoService.consultarPedidos(dataInicial, dataFinal);
+            return pedidos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(pedidos);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

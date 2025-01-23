@@ -1,6 +1,7 @@
 package com.Crud.Crud.entities;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Produto {
@@ -12,9 +13,8 @@ public class Produto {
     private String nome;
     private Double preco;
 
-    @ManyToOne
-    @JoinColumn(name = "pedido_id")
-    private Pedido pedido;
+    @ManyToMany(mappedBy = "produtos")
+    private List<Pedido> pedidos;
 
     // Getters e Setters
     public Long getId() {
@@ -41,11 +41,11 @@ public class Produto {
         this.preco = preco;
     }
 
-    public Pedido getPedido() {
-        return pedido;
+    public List<Pedido> getPedidos() {
+        return pedidos;
     }
 
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 }
