@@ -1,0 +1,13 @@
+com\Crud\Crud\controllers\ProdutoController.class
+com\Crud\Crud\repositories\ProdutoRepository.class
+com\Crud\Crud\services\ClienteService.class
+com\Crud\Crud\CrudApplication.class
+com\Crud\Crud\controllers\PedidoController.class
+com\Crud\Crud\entities\Pedido.class
+com\Crud\Crud\repositories\PedidoRepository.class
+com\Crud\Crud\services\PedidoService.class
+com\Crud\Crud\services\ProdutoService.class
+com\Crud\Crud\controllers\ClienteController.class
+com\Crud\Crud\entities\Cliente.class
+com\Crud\Crud\entities\Produto.class
+com\Crud\Crud\repositories\ClienteRepository.class
