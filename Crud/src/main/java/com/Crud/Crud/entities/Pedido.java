@@ -14,18 +14,18 @@ public class Pedido {
     private LocalDate dataPedido;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
     @ManyToMany
     @JoinTable(
-        name = "pedido_produto",
-        joinColumns = @JoinColumn(name = "pedido_id"),
-        inverseJoinColumns = @JoinColumn(name = "produto_id")
+      name = "pedido_produto",
+      joinColumns = @JoinColumn(name = "pedido_id"),
+      inverseJoinColumns = @JoinColumn(name = "produto_id")
     )
     private List<Produto> produtos;
 
-    private Double valorTotal;
+    private Double total;
 
     // Getters e Setters
     public Long getId() {
@@ -60,11 +60,16 @@ public class Pedido {
         this.produtos = produtos;
     }
 
-    public Double getValorTotal() {
-        return valorTotal;
+    public Double getTotal() {
+        return total;
     }
 
-    public void setValorTotal(Double valorTotal) {
-        this.valorTotal = valorTotal;
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    // Método para calcular o total do pedido com base nos produtos
+    public void calcularTotal() {
+        this.total = produtos.stream().mapToDouble(Produto::getPreco).sum();
     }
 }
